@@ -6,25 +6,15 @@ import com.shortify.api.responseBody.SuccessResponseBody;
 import com.shortify.api.service.URIRecordService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 
-@Path("/uri-record")
+@Path("/shortify/api/v1/uri-record")
 public class URIRecordResource {
     URIRecordService uriRecordService = new URIRecordService();
-
-    @GET
-    @Path("/test")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String test() {
-        return "OK";
-    }
 
     @POST
     @Path("/create")
@@ -33,8 +23,19 @@ public class URIRecordResource {
     public Response createUriRecord(@Valid URIRecordDTO uriRecordDTO) {
         String uriHash = uriRecordService.createUriResource(uriRecordDTO.getUri());
 
-        return Response.created(URI.create("/uri-record/" + uriHash))
-                .entity(new SuccessResponseBody(Response.Status.CREATED))
-                .build();
+        return Response.created(URI.create("/uri-record/" + uriHash)).build();
+    }
+
+    @GET
+    @Path("/{uriHash}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findURIRecord(@PathParam("uriHash") String uriHash) {
+        URIRecordEntity uriRecordEntity = uriRecordService.findURIRecordByHash(uriHash);
+
+        return uriRecordEntity == null ?
+                Response.status(Response.Status.NOT_FOUND).build() :
+                Response.status(Response.Status.OK)
+                        .entity(new SuccessResponseBody(Response.Status.OK, uriRecordEntity.toHashMap()))
+                        .build();
     }
 }

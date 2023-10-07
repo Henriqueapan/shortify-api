@@ -29,5 +29,7 @@ public class CORSFilter implements ContainerResponseFilter {
             responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
             responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
         }
+        responseContext.getHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+        responseContext.getHeaders().add("Access-Control-Expose-Headers", "Location");
     }
 }

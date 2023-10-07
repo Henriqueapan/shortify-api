@@ -23,7 +23,7 @@ public class URIRecordResource {
     public Response createUriRecord(@Valid URIRecordDTO uriRecordDTO) {
         String uriHash = uriRecordService.createUriResource(uriRecordDTO.getUri());
 
-        return Response.created(URI.create("/uri-record/" + uriHash)).build();
+        return Response.created(URI.create(uriHash)).build();
     }
 
     @GET

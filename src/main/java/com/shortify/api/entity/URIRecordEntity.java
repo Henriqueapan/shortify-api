@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 public class URIRecordEntity extends PanacheEntity {
     @JsonIgnore
+    @Transient
     private final ObjectMapper mapper = new ObjectMapper();
 
     private String longUri;

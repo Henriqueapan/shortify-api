@@ -22,6 +22,6 @@ public class URIRedirectResource {
 
         return originalUri == null ?
                 Response.status(Response.Status.NOT_FOUND).build() :
-                Response.status(Response.Status.SEE_OTHER).location(URI.create("https://www.google.com")).build();
+                Response.status(Response.Status.SEE_OTHER).location(URI.create(originalUri)).build();
     }
 }

@@ -35,7 +35,7 @@ public class URIRecordResource {
         return uriRecordEntity == null ?
                 Response.status(Response.Status.NOT_FOUND).build() :
                 Response.status(Response.Status.OK)
-                        .entity(new SuccessResponseBody(Response.Status.OK, uriRecordEntity.toHashMap()))
+                        .entity(new SuccessResponseBody(Response.Status.OK, "Shortified URI Record found", uriRecordEntity.toHashMap()))
                         .build();
     }
 }

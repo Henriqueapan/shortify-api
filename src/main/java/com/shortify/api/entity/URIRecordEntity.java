@@ -2,8 +2,7 @@ package com.shortify.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.shortify.api.mapper.ModulatedObjectMapper;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -23,7 +22,7 @@ import java.util.HashMap;
 public class URIRecordEntity extends PanacheEntity {
     @JsonIgnore
     @Transient
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ModulatedObjectMapper mapper = new ModulatedObjectMapper();
 
     private String longUri;
 
@@ -46,7 +45,6 @@ public class URIRecordEntity extends PanacheEntity {
     }
 
     public HashMap<String, ?> toHashMap(){
-        mapper.findAndRegisterModules().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return mapper.convertValue(this, new TypeReference<HashMap<String, ?>>() {});
     }
 }
